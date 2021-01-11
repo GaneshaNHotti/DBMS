@@ -1,0 +1,62 @@
+create table e(
+ssn varchar(10) primary key,
+name varchar(10),
+deptno number(10));
+
+create table p(
+pno number(10) primary key,
+parea varchar(10));
+
+create table a(
+ssn varchar(10),
+pno number(10),
+primary key(ssn,pno),
+foreign key(ssn) references e(ssn) on delete cascade,
+foreign key(pno) references p(pno) on delete cascade);
+
+insert into E values('&ssn','&name',&deptno);
+
+insert into P values(&pno,'&parea');
+
+insert into A values('&ssn',&pno);
+
+select ssn from a
+   where pno IN (select pno from p
+		where INITCAP(parea)='Database');
+
+select count(ssn),deptno from e
+   group by deptno;
+
+update a
+ set pno = 300
+   where ssn = 'IS1';
+
+PLSQL
+
+alter table e
+add sal number;
+
+update e
+ set sal = 1000;
+
+BEGIN
+	update e
+	  set sal=sal+(1.15*sal)
+	     where deptno=10;
+	dbms_output.put_line('NUM OF ROWS UPDATED ARE:'||sql%rowcount);
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
